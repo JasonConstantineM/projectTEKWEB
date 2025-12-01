@@ -17,9 +17,8 @@ class Cart
         $this->db = Database::getInstance();
     }
 
-    /**
-     * Get cart items for user
-     */
+    //Get cart items for user
+    
     public function getByUser(int $userId): array
     {
         return $this->db->select(
@@ -33,9 +32,8 @@ class Cart
         );
     }
 
-    /**
-     * Get cart item
-     */
+    //Get cart item
+    
     public function getItem(int $userId, int $productId): ?array
     {
         return $this->db->selectOne(
@@ -47,9 +45,8 @@ class Cart
         );
     }
 
-    /**
-     * Add item to cart
-     */
+    // Add item to cart
+     
     public function add(int $userId, int $productId, int $quantity = 1): array
     {
         // Validate quantity
@@ -97,9 +94,7 @@ class Cart
         ];
     }
 
-    /**
-     * Update cart item quantity
-     */
+    // Update cart item quantity
     public function updateQuantity(int $userId, int $productId, int $quantity): array
     {
         if ($quantity < 1) {
@@ -131,9 +126,7 @@ class Cart
         ];
     }
 
-    /**
-     * Remove item from cart
-     */
+    //Remove item from cart
     public function remove(int $userId, int $productId): array
     {
         $this->db->delete(
@@ -149,9 +142,7 @@ class Cart
         ];
     }
 
-    /**
-     * Clear all items from cart
-     */
+    //Clear all items from cart
     public function clear(int $userId): array
     {
         $this->db->delete($this->table, 'user_id = :user_id', ['user_id' => $userId]);
@@ -159,9 +150,7 @@ class Cart
         return ['success' => true, 'message' => 'Keranjang berhasil dikosongkan'];
     }
 
-    /**
-     * Get cart total
-     */
+    // Get cart total
     public function getTotal(int $userId): float
     {
         $result = $this->db->selectOne(
@@ -174,9 +163,8 @@ class Cart
         return (float) ($result['total'] ?? 0);
     }
 
-    /**
-     * Count cart items
-     */
+    // Count cart items
+     
     public function countItems(int $userId): int
     {
         $result = $this->db->selectOne(
@@ -186,9 +174,7 @@ class Cart
         return (int) ($result['total'] ?? 0);
     }
 
-    /**
-     * Validate cart items (check stock)
-     */
+    //Validate cart items (check stock)
     public function validate(int $userId): array
     {
         $items = $this->getByUser($userId);
